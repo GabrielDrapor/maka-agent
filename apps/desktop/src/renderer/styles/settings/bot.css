@@ -21,9 +21,29 @@
 }
 
 .settingsBotList button[data-active="true"] {
-  background: var(--active);
+  background: color-mix(in srgb, var(--bot-brand-color, var(--accent)) 8%, transparent);
   color: var(--foreground);
+  position: relative;
 }
+.settingsBotList button[data-active="true"]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  border-radius: 0 3px 3px 0;
+  background: var(--bot-brand-color, var(--accent));
+}
+
+.settingsBotList button[data-provider="telegram"] { --bot-brand-color: #229ED9; }
+.settingsBotList button[data-provider="feishu"]   { --bot-brand-color: #00C6B7; }
+.settingsBotList button[data-provider="wecom"]    { --bot-brand-color: #0089FF; }
+.settingsBotList button[data-provider="wechat"]   { --bot-brand-color: #07C160; }
+.settingsBotList button[data-provider="discord"]  { --bot-brand-color: #5865F2; }
+.settingsBotList button[data-provider="dingtalk"] { --bot-brand-color: #1372FB; }
+.settingsBotList button[data-provider="qq"]       { --bot-brand-color: #12B7F5; }
 
 .settingsBotList em {
   font-size: 10px;
@@ -76,10 +96,8 @@
     height: 28px;
     display: grid;
     place-items: center;
-    border-radius: 50%;
     background: transparent;
     color: var(--bot-brand-color, var(--accent));
-    overflow: hidden;
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0;
@@ -94,7 +112,6 @@
   .settingsBotLogo[data-large="true"] {
     width: 44px;
     height: 44px;
-    border-radius: 50%;
     font-size: 20px;
   }
 

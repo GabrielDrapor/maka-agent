@@ -20,7 +20,9 @@ import {
   Button,
   DialogContent,
   DialogRoot,
+  FieldRoot,
   Input,
+  Label,
   PrimitiveBadge,
   RelativeTime,
   SettingsSelect,
@@ -204,15 +206,15 @@ function BotWeChatFields(props: {
   const [advancedOpen, setAdvancedOpen] = useState<boolean>(hasAdvanced);
   return (
     <>
-      <label className="settingsField">
-        <span>Bot Token</span>
+      <FieldRoot className="settingsField">
+        <Label>Bot Token</Label>
         <PasswordInput
           value={channel.token}
           onChange={(next) => updateChannel({ token: next })}
           placeholder="本机 wechat-bridge Bearer Token"
           ariaLabel="微信 Bot Token"
         />
-      </label>
+      </FieldRoot>
       <div className="settingsBotAdvanced">
         <Button
           type="button"
@@ -226,33 +228,33 @@ function BotWeChatFields(props: {
         </Button>
         {advancedOpen && (
           <div className="settingsBotAdvancedBody">
-            <label className="settingsField">
-              <span>本机 bridge 地址</span>
+            <FieldRoot className="settingsField">
+              <Label>本机 bridge 地址</Label>
               <Input
                 value={channel.webhookUrl ?? ''}
                 onChange={(event) => updateChannel({ webhookUrl: event.currentTarget.value })}
                 placeholder="http://127.0.0.1:18400"
                 aria-label="微信本机 bridge 地址"
               />
-            </label>
-            <label className="settingsField">
-              <span>公众号 App ID</span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>公众号 App ID</Label>
               <Input
                 value={channel.appId ?? ''}
                 onChange={(event) => updateChannel({ appId: event.currentTarget.value })}
                 placeholder="微信公众号 App ID"
                 aria-label="微信公众号 App ID"
               />
-            </label>
-            <label className="settingsField">
-              <span>公众号 App Secret</span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>公众号 App Secret</Label>
               <PasswordInput
                 value={channel.appSecret ?? ''}
                 onChange={(next) => updateChannel({ appSecret: next })}
                 placeholder="微信公众号 App Secret"
                 ariaLabel="微信公众号 App Secret"
               />
-            </label>
+            </FieldRoot>
             <div className="settingsNotice">
               本机 bridge 默认为 <code>http://127.0.0.1:18400</code>。公众号 App ID / App Secret 仅用于公众号消息发送，个人微信扫码登录走本机 bridge。
             </div>
@@ -868,6 +870,7 @@ export function BotChatSettingsPage(props: {
               key={provider}
               type="button"
               data-active={selected === provider}
+              data-provider={provider}
               data-support={providerSupport}
               aria-current={selected === provider ? 'page' : undefined}
               disabled={botActionBusy}
@@ -935,14 +938,14 @@ export function BotChatSettingsPage(props: {
             fields, and missing TUN-mode amber notices. */}
         {selected === 'telegram' && (
           <>
-            <label className="settingsField">
-              <span>Bot Token</span>
+            <FieldRoot className="settingsField">
+              <Label>Bot Token</Label>
               <PasswordInput value={channel.token} onChange={(next) => updateChannel({ token: next })} placeholder="123456:ABC-DEF..." ariaLabel="Telegram Bot Token" />
-            </label>
-            <label className="settingsField">
-              <span>代理地址 <em className="settingsFieldHint">(国内网络必填)</em></span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>代理地址 <em className="settingsFieldHint">(国内网络必填)</em></Label>
               <Input value={channel.proxyUrl} onChange={(event) => updateChannel({ proxyUrl: event.currentTarget.value })} placeholder="http://127.0.0.1:7890" aria-label="Telegram 代理地址" />
-            </label>
+            </FieldRoot>
             <BotAllowedUserIdsField
               value={channel.allowedUserIds}
               onChange={(next) => updateChannel({ allowedUserIds: next })}
@@ -956,16 +959,16 @@ export function BotChatSettingsPage(props: {
 
         {selected === 'feishu' && (
           <>
-            <label className="settingsField">
-              <span>App ID</span>
+            <FieldRoot className="settingsField">
+              <Label>App ID</Label>
               <Input aria-label="飞书凭据 ID" value={channel.appId ?? ''} onChange={(event) => updateChannel({ appId: event.currentTarget.value })} placeholder="cli_xxxx" />
-            </label>
-            <label className="settingsField">
-              <span>App Secret</span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>App Secret</Label>
               <PasswordInput value={channel.appSecret ?? ''} onChange={(next) => updateChannel({ appSecret: next })} placeholder="xxxx" ariaLabel="飞书 App Secret" />
-            </label>
-            <label className="settingsField">
-              <span>域名</span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>域名</Label>
               <SettingsSelect
                 value={channel.domain ?? 'feishu.cn'}
                 ariaLabel="飞书域名"
@@ -975,20 +978,20 @@ export function BotChatSettingsPage(props: {
                 ]}
                 onChange={(domain) => updateChannel({ domain })}
               />
-            </label>
+            </FieldRoot>
           </>
         )}
 
         {selected === 'discord' && (
           <>
-            <label className="settingsField">
-              <span>Bot Token</span>
+            <FieldRoot className="settingsField">
+              <Label>Bot Token</Label>
               <PasswordInput value={channel.token} onChange={(next) => updateChannel({ token: next })} placeholder="MTAx..." ariaLabel="Discord Bot Token" />
-            </label>
-            <label className="settingsField">
-              <span>代理地址 <em className="settingsFieldHint">(仅用于 Bot 鉴权)</em></span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>代理地址 <em className="settingsFieldHint">(仅用于 Bot 鉴权)</em></Label>
               <Input value={channel.proxyUrl} onChange={(event) => updateChannel({ proxyUrl: event.currentTarget.value })} placeholder="http://127.0.0.1:7890" aria-label="Discord 代理地址" />
-            </label>
+            </FieldRoot>
             <div className="settingsBotInfoNotice">
               <span className="settingsBotInfoNoticeIcon" aria-hidden="true">ⓘ</span>
               <span>国内网络访问 Discord：上方代理仅作用于 Bot 鉴权请求，消息收发走 WebSocket 长连接需要系统级代理。请打开网络的 TUN 模式后重启应用。</span>
@@ -998,27 +1001,27 @@ export function BotChatSettingsPage(props: {
 
         {selected === 'dingtalk' && (
           <>
-            <label className="settingsField">
-              <span>Client ID (AppKey)</span>
+            <FieldRoot className="settingsField">
+              <Label>Client ID (AppKey)</Label>
               <Input aria-label="钉钉应用密钥" value={channel.appId ?? ''} onChange={(event) => updateChannel({ appId: event.currentTarget.value })} placeholder="dingxxxxxxxx" />
-            </label>
-            <label className="settingsField">
-              <span>Client Secret (AppSecret)</span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>Client Secret (AppSecret)</Label>
               <PasswordInput value={channel.appSecret ?? ''} onChange={(next) => updateChannel({ appSecret: next })} placeholder="xxxx" ariaLabel="钉钉 Client Secret" />
-            </label>
+            </FieldRoot>
           </>
         )}
 
         {selected === 'wecom' && (
           <>
-            <label className="settingsField">
-              <span>Bot ID</span>
+            <FieldRoot className="settingsField">
+              <Label>Bot ID</Label>
               <Input value={channel.appId ?? ''} onChange={(event) => updateChannel({ appId: event.currentTarget.value })} placeholder="企业微信 AI 应用 Bot ID" aria-label="企业微信 Bot ID" />
-            </label>
-            <label className="settingsField">
-              <span>Secret</span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>Secret</Label>
               <PasswordInput value={channel.appSecret ?? ''} onChange={(next) => updateChannel({ appSecret: next })} placeholder="AI 应用 Secret" ariaLabel="企业微信 Secret" />
-            </label>
+            </FieldRoot>
           </>
         )}
 
@@ -1035,14 +1038,14 @@ export function BotChatSettingsPage(props: {
 
         {selected === 'qq' && (
           <>
-            <label className="settingsField">
-              <span>AppID</span>
+            <FieldRoot className="settingsField">
+              <Label>AppID</Label>
               <Input aria-label="QQ 应用编号" value={channel.appId ?? ''} onChange={(event) => updateChannel({ appId: event.currentTarget.value })} placeholder="102xxxxxx" />
-            </label>
-            <label className="settingsField">
-              <span>AppSecret</span>
+            </FieldRoot>
+            <FieldRoot className="settingsField">
+              <Label>AppSecret</Label>
               <PasswordInput value={channel.appSecret ?? ''} onChange={(next) => updateChannel({ appSecret: next })} placeholder="xxxx" ariaLabel="QQ AppSecret" />
-            </label>
+            </FieldRoot>
           </>
         )}
 
@@ -1275,8 +1278,8 @@ function BotAllowedUserIdsField(props: {
   };
 
   return (
-    <label className="settingsField">
-      <span>允许的用户 ID（{parsed.length} / {MAX_ALLOWED_USER_IDS}）</span>
+    <FieldRoot className="settingsField">
+      <Label>允许的用户 ID（{parsed.length} / {MAX_ALLOWED_USER_IDS}）</Label>
       <Textarea
         value={buffer}
         onChange={(event) => setBuffer(event.currentTarget.value)}
@@ -1296,7 +1299,7 @@ function BotAllowedUserIdsField(props: {
           </span>
         )}
       </small>
-    </label>
+    </FieldRoot>
   );
 }
 
